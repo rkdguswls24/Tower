@@ -74,7 +74,8 @@ def logLevelAssert = 7;
 android {
     compileSdkVersion android_build_sdk_version
     buildToolsVersion android_build_tools_version
-
+    //all flavor dimension error
+    flavorDimensions "default"
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -142,7 +143,7 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
+    /*android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def file = output.outputFile
             if (file != null && file.name.endsWith('.apk')) {
@@ -151,6 +152,14 @@ android {
                 def versionCode = defaultConfig.versionCode
                 output.outputFile = new File(file.parent, "tower-${flavorName}-${buildType}.${versionCode}.apk")
             }
+        }
+    }*/
+    //outputfilename error
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def flavor = variant.name
+            def versionName = variant.versionName
+            outputFileName = "prefix_${flavor}_${versionName}.apk"
         }
     }
 
